@@ -1,4 +1,4 @@
-package com.library.library_api.dto.category;
+package com.library.library_api.dto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
