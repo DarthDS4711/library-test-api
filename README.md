@@ -13,7 +13,7 @@ Dentro de este paquete se encuentran los siguientes subpaquetes principales:
 * **dto** → Clases Data Transfer Object para transportar datos entre capas.
 * **model** → Entidades o modelos de dominio.
 * **repository** → Interfaces de persistencia con MyBatis (mappers).
-* **resources** → Archivos de configuración, como `application.properties`, `application.yml` y los mappers XML de MyBatis.
+* **resources** → Archivos de configuración, como `application.properties`, `application.yml`
 
 ---
 
