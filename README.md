@@ -23,7 +23,7 @@ Dentro de este paquete se encuentran los siguientes subpaquetes principales:
 * **Maven 3.6+**
 * **Spring Boot 2.7.x**
 * **MyBatis Spring Boot Starter**
-* Una base de datos compatible (ejemplo: H2, MySQL, PostgreSQL)
+* Una base de datos compatible (OracleDB)
 
 ---
 
