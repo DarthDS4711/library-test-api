@@ -21,6 +21,9 @@ public interface StudentRepository{
     @Select("SELECT * FROM STUDENT WHERE STUDENT_NUMBER = #{code}")
     Optional<Student> findByCode(int code);
 
+     @Select("SELECT * FROM STUDENT WHERE ID = #{id}")
+    Optional<Student> findById(Long id);
+
     @Select("SELECT * FROM STUDENT")
     List<Student> findAll();
 

@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import com.library.library_api.dto.category.CategoryDTO;
 import com.library.library_api.model.Category;
 import com.library.library_api.repository.CategoryRepository;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/category")
 public class CategoryController {

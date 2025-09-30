@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -26,6 +27,7 @@ import com.library.library_api.repository.InventaryRepository;
 import com.library.library_api.repository.StudentRepository;
 
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1/loans")
 public class BookLoanController {
@@ -51,7 +53,7 @@ public class BookLoanController {
         if(!posibleInventary.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        Optional<Student> posibleStudent = this.studentRepository.findByCode(bookLoanCreateDTO.getStudentNumber());
+        Optional<Student> posibleStudent = this.studentRepository.findById(Long.valueOf(bookLoanCreateDTO.getStudentNumber()));
          if(!posibleStudent.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -82,7 +84,7 @@ public class BookLoanController {
         if(!posibleInventary.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        Optional<Student> posibleStudent = this.studentRepository.findByCode(bookLoanCreateDTO.getStudentNumber());
+        Optional<Student> posibleStudent = this.studentRepository.findById(Long.valueOf(bookLoanCreateDTO.getStudentNumber()));
          if(!posibleStudent.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
