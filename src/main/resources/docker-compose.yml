@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:8.0
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: test_root
+      MYSQL_DATABASE: mi_base_datos
+      MYSQL_USER: mi_usuario
+      MYSQL_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+    volumes:
+      # Persistencia de datos: Host : Contenedor
+      # Esto guarda los datos en una carpeta 'mysql-data' en tu directorio actual
+      - /var/lib/mysql
+      - ./sql-scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+  app:
+    build:
+        context: ../../../
+        dockerfile: src/main/resources/docker/DockerFile
+    container_name: library_api_container
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysqldb:
+        condition: service_healthy # Espera a que el healthcheck de MySQL de OK
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/mi_base_datos?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: mi_usuario
+      SPRING_DATASOURCE_PASSWORD: 123456

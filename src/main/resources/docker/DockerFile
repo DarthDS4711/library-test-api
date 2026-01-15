@@ -1,0 +1,28 @@
+# --- ETAPA 1: Construcción (BUILD) ---
+# CAMBIO IMPORTANTE: Quitamos "-alpine". Usamos la imagen completa para evitar errores de SSL/Handshake
+FROM maven:3.9-eclipse-temurin-8 AS build
+
+WORKDIR /app
+
+# Copiamos el pom y bajamos dependencias
+COPY pom.xml .
+
+# CAMBIO: Agregamos -Dhttps.protocols=TLSv1.2 para asegurar compatibilidad con Java 8
+RUN mvn dependency:go-offline -Dhttps.protocols=TLSv1.2
+
+COPY src ./src
+
+# Compilamos saltando tests para evitar errores de entorno en el build
+# Usamos 'package' en lugar de 'install' porque no necesitamos guardarlo en el repo local
+RUN mvn clean install -Dhttps.protocols=TLSv1.2
+
+# --- ETAPA 2: Ejecución (RUN) ---
+# Aquí SÍ podemos usar Alpine porque ya solo necesitamos correr el JAR, no descargar nada
+FROM eclipse-temurin:8-jre-alpine
+
+# Copiamos el JAR generado
+COPY --from=build /app/target/*.jar app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "/app.jar"]
